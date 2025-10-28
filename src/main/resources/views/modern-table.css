@@ -1,0 +1,33 @@
+
+/* 🔹 Tabs normales (no seleccionados) */
+.tab-pane.tabs-modern .tab-header-area .tab {
+    -fx-background-color: #fcfcfc;x
+    -fx-text-base-color: #333333;
+    -fx-background-radius: 6 6 0 0;
+    -fx-padding: 4 14 4 14;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-border-color: transparent transparent #cccccc transparent;
+}
+
+/* 🔹 Tab seleccionado */
+.tab-pane.tabs-modern .tab-header-area .tab:selected {
+    -fx-background-color: linear-gradient(to bottom, #c8d6e5, #c8d6e5);
+    -fx-text-base-color: white;
+    -fx-border-color: transparent transparent #0078D7 transparent;
+}
+
+/* 🔹 Efecto hover */
+.tab-pane.tabs-modern .tab-header-area .tab:hover {
+    -fx-background-color: #c8d6e5;
+}
+
+/* 🔹 Ocultar el borde interior feo de la selección */
+.tab-pane.tabs-modern .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+/* 🔹 Opcional: animación ligera (para JavaFX 17+) */
+.tab-pane.tabs-modern .tab:selected {
+    -fx-transition: all 0.3s ease-in-out;
+}

@@ -1,13 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.Avatar?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
+<BorderPane fx:id="root" prefHeight="720.0" prefWidth="1080.0" stylesheets="@modern-table.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.minvoice.demo.controllers.MainViewController">
 
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.minvoice.demo.controllers.MainViewController">
-   <children>
-      <Pane prefHeight="720.0" prefWidth="273.0" />
-      <Button layoutX="397.0" layoutY="130.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="231.0" text="Click me!" />
-   </children>
-</AnchorPane>
+   <!-- ========== SIDEBAR (igual) ========== -->
+   <left>
+      <VBox prefHeight="982.0" prefWidth="271.0" spacing="8.0">
+         <padding><Insets bottom="24" left="16" right="16" top="24" /></padding>
+         <style>-fx-background-color: #2f3b4a;</style>
+         <Avatar />
+
+         <Label prefHeight="27.0" prefWidth="194.0" text="Daniel Mora Cantillo" textFill="white">
+            <style>-fx-text-fill: white;</style>
+            <font><Font name="System Bold" size="18" /></font>
+         </Label>
+         <Separator opacity="0.2" />
+
+         <ToggleButton selected="true" text="Panel">
+            <style>-fx-text-fill: white;-fx-background-radius: 10;-fx-background-color:#435569;</style>
+            <font>
+               <Font name="Aptos Display" size="15.0" />
+            </font>
+         </ToggleButton>
+         <ToggleButton text="Subir factura">
+            <style>-fx-text-fill:white;-fx-background-radius:10;-fx-background-color:transparent;</style>
+            <font>
+               <Font size="15.0" />
+            </font>
+         </ToggleButton>
+         <ToggleButton text="Facturas">
+            <style>-fx-text-fill:white;-fx-background-radius:10;-fx-background-color:transparent;</style>
+            <font>
+               <Font size="15.0" />
+            </font>
+         </ToggleButton>
+         <ToggleButton text="Gastos">
+            <style>-fx-text-fill:white;-fx-background-radius:10;-fx-background-color:transparent;</style>
+            <font>
+               <Font size="15.0" />
+            </font>
+         </ToggleButton>
+         <ToggleButton text="Configuración">
+            <style>-fx-text-fill:white;-fx-background-radius:10;-fx-background-color:transparent;</style>
+            <font>
+               <Font size="15.0" />
+            </font>
+         </ToggleButton>
+         <Button style="-fx-text-fill:white;-fx-background-color:transparent;" text="Cerrar sesión">
+            <font>
+               <Font name="Aptos Display" size="15.0" />
+            </font></Button>
+         <ToggleButton text="Ingresos">
+            <style>-fx-text-fill:white;-fx-background-radius:10;-fx-background-color:transparent;</style>
+            <font>
+               <Font size="15.0" />
+            </font>
+         </ToggleButton>
+      </VBox>
+   </left>
+
+   <!-- ========== TOP BAR (sin buscador) ========== -->
+   <top>
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <padding><Insets bottom="12" left="20" right="20" top="12" /></padding>
+         <style>-fx-background-color:white;-fx-border-color:#e6e8eb;-fx-border-width:0 0 1 0;</style>
+
+         <Label text="Management invoices">
+            <font><Font name="System Bold" size="20" /></font>
+         </Label>
+         <Pane HBox.hgrow="ALWAYS" />
+         <Button fx:id="btnNuevaFactura" prefHeight="38.0" prefWidth="208.0" style="-fx-background-color:#2f7df4;-fx-text-fill:white;-fx-background-radius:8;-fx-font-weight:bold;" text="+    Nueva factura">
+            <font>
+               <Font name="Aptos Display" size="14.0" />
+            </font></Button>
+      </HBox>
+   </top>
+
+   <!-- ========== CONTENT ========== -->
+   <center>
+      <VBox spacing="16.0">
+         <padding><Insets bottom="20" left="20" right="20" top="16" /></padding>
+
+         <!-- Tarjetas resumen (igual) -->
+         <HBox spacing="12.0">
+            <AnchorPane prefHeight="119.0" prefWidth="290.0" styleClass="card">
+               <children>
+                  <VBox spacing="6.0" AnchorPane.leftAnchor="12" AnchorPane.topAnchor="12">
+                     <Label styleClass="muted" text="Total Facturado" />
+                     <Label fx:id="lblTotalFacturado" text="0.00">
+                        <font><Font name="Aptos Display Bold" size="45.0" /></font>
+                     </Label>
+                  </VBox>
+               </children>
+            </AnchorPane>
+
+            <AnchorPane prefHeight="86" prefWidth="288.0" styleClass="card">
+               <children>
+                  <VBox spacing="6.0" AnchorPane.leftAnchor="12" AnchorPane.topAnchor="12">
+                     <Label styleClass="muted" text="Total Pagado" />
+                     <Label fx:id="lblTotalPagado" style="-fx-text-fill:#16a34a;" text="0.00">
+                        <font><Font name="Aptos Display Bold" size="45.0" /></font>
+                     </Label>
+                  </VBox>
+               </children>
+            </AnchorPane>
+
+            <AnchorPane prefHeight="86" prefWidth="277.0" styleClass="card">
+               <children>
+                  <VBox spacing="6.0" AnchorPane.leftAnchor="12" AnchorPane.topAnchor="12">
+                     <Label styleClass="muted" text="Pendiente de cobro" />
+                     <Label fx:id="lblTotalPendiente" style="-fx-text-fill:#d97706;" text="0.00">
+                        <font><Font name="Aptos Display Bold" size="45.0" /></font>
+                     </Label>
+                  </VBox>
+               </children>
+            </AnchorPane>
+
+            <AnchorPane prefHeight="86" prefWidth="276.0" styleClass="card">
+               <children>
+                  <VBox spacing="6.0" AnchorPane.leftAnchor="12" AnchorPane.topAnchor="12">
+                     <Label styleClass="muted" text="Cantidad de facturas emitidas" />
+                     <Label fx:id="lblCantidadFacturas" text="0">
+                        <font><Font name="Aptos Display Bold" size="45.0" /></font>
+                     </Label>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </HBox>
+
+         <HBox alignment="CENTER_RIGHT" spacing="10">
+            <TextField fx:id="txtBuscar" prefHeight="32.0" prefWidth="458.0" promptText="Buscar factura..." />
+            <Button fx:id="btnSeach" prefHeight="32.0" prefWidth="150.0" style="-fx-background-color:#2f7df4;-fx-text-fill:white;-fx-background-radius:8;-fx-font-weight:bold;" text="Buscar factura" />
+
+         </HBox>
+
+         <TabPane fx:id="tabPane" styleClass="tabs-modern" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+               <Tab text="Todas">
+                  <content>
+                     <AnchorPane>
+                        <children>
+                           <TableView fx:id="tblTodas" styleClass="table-modern table-compact" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                              <columns>
+                                 <TableColumn prefWidth="120" text="Estado" />
+                                 <TableColumn prefWidth="420" text="Descripción" />
+                                 <TableColumn prefWidth="140" text="Monto" />
+                                 <TableColumn prefWidth="160" text="Fecha" />
+                                 <TableColumn prefWidth="180" text="Archivo" />
+                              </columns>
+                           </TableView>
+                        </children>
+                     </AnchorPane>
+                  </content>
+               </Tab>
+
+               <Tab text="Pendientes">
+                  <content>
+                     <AnchorPane>
+                        <children>
+                           <TableView fx:id="tblPendientes" styleClass="table-modern table-compact" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.8000000000001819" AnchorPane.topAnchor="0.0">
+                              <columns>
+                                 <TableColumn prefWidth="120" text="Estado" />
+                                 <TableColumn prefWidth="420" text="Descripción" />
+                                 <TableColumn prefWidth="140" text="Monto" />
+                                 <TableColumn prefWidth="160" text="Fecha" />
+                                 <TableColumn prefWidth="180" text="Archivo" />
+                              </columns>
+                           </TableView>
+                        </children>
+                     </AnchorPane>
+                  </content>
+               </Tab>
+
+               <Tab text="Pagadas">
+                  <content>
+                     <AnchorPane>
+                        <children>
+                           <TableView fx:id="tblPagadas" styleClass="table-modern table-compact" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+                              <columns>
+                                 <TableColumn prefWidth="120" text="Estado" />
+                                 <TableColumn prefWidth="420" text="Descripción" />
+                                 <TableColumn prefWidth="140" text="Monto" />
+                                 <TableColumn prefWidth="160" text="Fecha" />
+                                 <TableColumn prefWidth="180" text="Archivo" />
+                              </columns>
+                           </TableView>
+                        </children>
+                     </AnchorPane>
+                  </content>
+               </Tab>
+            </tabs>
+         </TabPane>
+      </VBox>
+   </center>
+
+   <!-- ========== STATUS BAR (opcional) ========== -->
+   <bottom>
+      <HBox spacing="10">
+         <padding><Insets bottom="8" left="20" right="20" top="8" /></padding>
+         <style>-fx-background-color:#f7f8fa;-fx-border-color:#e6e8eb;-fx-border-width:1 0 0 0;</style>
+         <Label fx:id="lblStatus" text="Listo." />
+      </HBox>
+   </bottom>
+</BorderPane>
