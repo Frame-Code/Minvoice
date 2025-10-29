@@ -1,0 +1,36 @@
+/* Texto sutil */
+.muted { -fx-text-fill: #6b7280; }
+
+/* Botón primario */
+.btn-primary {
+  -fx-background-color: #2f7df4;
+  -fx-text-fill: white;
+  -fx-background-radius: 8;
+  -fx-font-weight: bold;
+}
+
+/* Mensajes de error */
+.error-label {
+  -fx-text-fill: #dc2626;
+  -fx-font-weight: bold;
+}
+
+/* Dropzone */
+.dropzone {
+  -fx-background-color: white;
+  -fx-background-radius: 12;
+  -fx-border-color: #dbe3ee;
+  -fx-border-radius: 12;
+  -fx-border-width: 2;
+  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 12, 0, 0, 4);
+}
+.dropzone:hover {
+  -fx-border-color: #2f7df4;
+  -fx-background-color: #f8fbff;
+}
+.dropzone:focused {
+  -fx-border-color: #2f7df4;
+}
+
+.dropzone-title   { -fx-text-fill: #334155; -fx-font-size: 14px; -fx-font-weight: bold; }
+.dropzone-subtitle{ -fx-text-fill: #64748b; -fx-font-size: 12px; }

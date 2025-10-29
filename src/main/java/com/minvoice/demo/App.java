@@ -9,13 +9,7 @@ import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.net.JarURLConnection;
-import java.net.URL;
-import java.security.CodeSource;
-import java.util.Enumeration;
 import java.util.Objects;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 public class App extends Application {
     private ConfigurableApplicationContext context;
@@ -44,7 +38,7 @@ public class App extends Application {
         ).toExternalForm();
         scene.getStylesheets().add(glistenCss);
         scene.getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource("/views/modern-table.css")).toExternalForm()
+                Objects.requireNonNull(getClass().getResource("/views/styles/modern-table.css")).toExternalForm()
         );
 
 
