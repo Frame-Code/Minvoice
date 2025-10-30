@@ -13,9 +13,9 @@ import java.util.Optional;
 
 @Repository
 public interface IInvoiceRepository extends JpaRepository<Invoice, Integer> {
-    @Query(value = "SELECT d FROM DetailInvoice d WHERE d.Invoice.id = :id")
+    @Query(value = "SELECT d FROM DetailInvoice d WHERE d.invoice.id = :id")
     List<DetailInvoice> findDetailsByInvoiceId(@Param("id") int id);
 
-    @Query(value = "SELECT d FROM InvoiceFile d WHERE d.Invoice.id = :id")
+    @Query(value = "SELECT d FROM InvoiceFile d WHERE d.invoice.id = :id")
     Optional<InvoiceFile> findInvoiceFileByInvoiceId(@Param("id") int id);
 }

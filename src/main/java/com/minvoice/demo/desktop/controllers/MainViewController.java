@@ -1,5 +1,6 @@
 package com.minvoice.demo.desktop.controllers;
 
+import com.minvoice.demo.application.services.interfaces.IInfoInvoiceService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,31 @@ import java.util.Arrays;
 @CommonsLog
 public class MainViewController {
     private final ApplicationContext context;
+    private final IInfoInvoiceService infoInvoiceService;
 
     @FXML
     private Button addNewInvoice;
+    @FXML
+    private Label lblTotalFacturado;
+    @FXML
+    private Label lblTotalPagado;
+    @FXML
+    private Label lblTotalPendiente;
+    @FXML
+    private Label lblCantidadFacturas;
+
+    @FXML
+    private void initialize() {
+        String totalBilled = String.format("%.2f", infoInvoiceService.getTotalBilled());
+        String totalPaid = String.format("%.2f", infoInvoiceService.getTotalPaid());
+        String totalPaymentDue = String.format("%.2f", infoInvoiceService.getPaymentDue());
+        String invoiceCount = String.valueOf(infoInvoiceService.getInvoiceCount());
+
+        lblTotalFacturado.setText(totalBilled);
+        lblTotalPagado.setText(totalPaid);
+        lblTotalPendiente.setText(totalPaymentDue);
+        lblCantidadFacturas.setText(invoiceCount);
+    }
 
     @FXML
     public void onAddInvoice(ActionEvent actionEvent) {
