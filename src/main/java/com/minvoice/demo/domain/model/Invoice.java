@@ -22,6 +22,9 @@ public class Invoice {
     @Enumerated(EnumType.STRING)
     public TypeInvoice typeInvoice;
 
+    @Column(nullable = false, unique = true)
+    public String noInvoice;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_generalStatus")
     public GeneralStatus status;

@@ -6,7 +6,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -17,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="620" prefWidth="720" stylesheets="/views/styles/new-invoice.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.minvoice.demo.desktop.controllers.NewInvoiceController">
+<BorderPane prefHeight="577.0" prefWidth="857.0" stylesheets="/views/styles/new-invoice.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.minvoice.demo.desktop.controllers.NewInvoiceController">
 
     <!-- Título -->
     <top>
@@ -31,66 +30,88 @@
 
     <!-- Contenido -->
     <center>
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="535.0" prefWidth="825.0" vbarPolicy="AS_NEEDED">
             <content>
-                <VBox spacing="14">
+                <VBox prefWidth="788.0" spacing="14">
                     <padding><Insets bottom="20" left="20" right="20" top="8" /></padding>
 
                     <!-- Campos básicos -->
-                    <GridPane hgap="12" vgap="10">
+                    <GridPane hgap="12" prefHeight="62.0" prefWidth="803.0" vgap="10">
                         <columnConstraints>
-                            <ColumnConstraints percentWidth="30" />
-                            <ColumnConstraints percentWidth="70" />
+                            <ColumnConstraints percentWidth="27.0" />
+                            <ColumnConstraints percentWidth="93.0" />
+                     <ColumnConstraints minWidth="10.0" percentWidth="37.0" prefWidth="100.0" />
+                     <ColumnConstraints minWidth="10.0" percentWidth="93.0" prefWidth="100.0" />
                         </columnConstraints>
 
                         <children>
-                            <Label text="Descripción:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                            <TextField fx:id="txtDescripcion" promptText="Ej. Desarrollo app móvil" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <Label text="Descripción:" GridPane.columnIndex="0" />
+                            <TextField fx:id="txtDescripcion" promptText="Ej. Desarrollo app móvil" text="Factura mensual" GridPane.columnIndex="1" GridPane.columnSpan="3" />
 
-                            <Label text="Monto (USD):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                            <TextField fx:id="txtMonto" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                            <Label text="Fecha de emisión:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                            <DatePicker fx:id="dpFecha" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                            <Label text="Estado:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                            <ComboBox fx:id="cbEstado" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            <Label text="Estado:" GridPane.rowIndex="1" />
+                            <ComboBox fx:id="cbEstado" prefHeight="26.0" prefWidth="297.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                     <Label text="Tipo:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                     <ComboBox fx:id="cbEstado1" prefHeight="26.0" prefWidth="298.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         </children>
                   <rowConstraints>
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
+                     <RowConstraints maxHeight="35.200006103515626" minHeight="18.40000801086426" prefHeight="22.400006103515626" />
+                     <RowConstraints maxHeight="31.199988555908206" minHeight="4.799993896484374" prefHeight="18.399993896484375" />
                   </rowConstraints>
                     </GridPane>
 
                     <!-- Dropzone PDF -->
-                    <VBox spacing="8">
-                        <Label text="Archivo PDF de la factura:" />
-                        <StackPane fx:id="dropZone" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="140" styleClass="dropzone">
+                    <VBox prefWidth="665.0" spacing="8">
+                        <Label text="Archivo XML de la factura:" />
+                        <StackPane fx:id="dropZone" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="80" styleClass="dropzone">
                             <children>
-                                <VBox alignment="CENTER" spacing="6">
+                                <VBox alignment="CENTER" prefHeight="90.0" prefWidth="802.0" spacing="6.0">
                                     <Label fx:id="lblDropZone" styleClass="dropzone-title" text="Arrastra y suelta aquí el PDF" />
-                                    <Label fx:id="lblDropZoneExaminar" styleClass="dropzone-subtitle" text="o haz clic en “Examinar…”" />
+                                    <Label fx:id="lblDropZoneExaminar" styleClass="dropzone-subtitle" text="o haz clic aquí para buscar manualmente" />
                                 </VBox>
                             </children>
                         </StackPane>
-                        <HBox alignment="CENTER_LEFT" spacing="10">
-                            <Button fx:id="btnExaminar" onAction="#chooseFile" text="Examinar…" />
-                            <Label fx:id="lblArchivo" styleClass="muted" text="Ningún archivo seleccionado" />
-                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="748.0" spacing="10" />
+                  <Label text="Archivo PDF de la factura:" />
+                  <StackPane fx:id="dropZone1" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="100" styleClass="dropzone">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="57.0" prefWidth="748.0" spacing="6.0">
+                           <children>
+                              <Label fx:id="lblDropZone1" styleClass="dropzone-title" text="Arrastra y suelta aquí el PDF" />
+                              <Label fx:id="lblDropZoneExaminar1" styleClass="dropzone-subtitle" text="o haz clic aquí para buscar manualmente" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </StackPane>
                     </VBox>
 
                     <!-- Notas opcionales -->
-                    <VBox spacing="6">
-                        <Label text="Notas (opcional):" />
-                        <TextArea fx:id="txtNotas" prefRowCount="3" promptText="Observaciones, referencia del cliente, etc." />
-                    </VBox>
+                    <VBox spacing="6" />
 
                     <!-- Mensaje de error -->
                     <Label fx:id="lblError" styleClass="error-label" text="" />
+               <GridPane hgap="12" prefHeight="66.0" prefWidth="742.0" vgap="10">
+                  <columnConstraints>
+                     <ColumnConstraints maxWidth="173.00000762939453" minWidth="10.0" percentWidth="25.0" prefWidth="173.00000762939453" />
+                     <ColumnConstraints maxWidth="370.0" minWidth="197.99999237060547" percentWidth="79.0" prefWidth="370.0" />
+                     <ColumnConstraints maxWidth="128.20001220703125" minWidth="45.0" percentWidth="37.0" prefWidth="45.0" />
+                     <ColumnConstraints maxWidth="256.3999328613281" minWidth="10.0" percentWidth="59.0" prefWidth="256.3999328613281" />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <children>
+                     <Label text="Monto (USD):" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                     <TextField fx:id="txtMonto1" prefHeight="26.0" prefWidth="239.0" promptText="0.00" GridPane.columnIndex="3" />
+                     <Label prefHeight="18.0" prefWidth="214.0" text="Fecha de emisión:" />
+                     <DatePicker fx:id="dpFecha1" prefHeight="26.0" prefWidth="367.0" GridPane.columnIndex="1" />
+                     <Label text="Observación" GridPane.rowIndex="1" />
+                     <TextField fx:id="txtDescripcion11" prefHeight="26.0" prefWidth="685.0" promptText="Alguna observación" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1" />
+                  </children>
+                  <rowConstraints>
+                     <RowConstraints maxHeight="43.20003356933594" minHeight="1.1999877929687557" prefHeight="24.000027465820324" />
+                     <RowConstraints maxHeight="37.59998168945313" minHeight="2.4000000000000057" prefHeight="26.399981689453114" />
+                  </rowConstraints>
+               </GridPane>
 
-                    <!-- Acciones -->
+                          <!-- Acciones -->
                     <HBox alignment="CENTER_RIGHT" spacing="10">
                         <Button fx:id="btnCancelar" onAction="#closeDialog" prefHeight="32.0" prefWidth="109.0" text="Cancelar" />
                         <Button fx:id="btnGuardar" defaultButton="true" onAction="#saveInvoice" prefHeight="30.0" prefWidth="131.0" styleClass="btn-primary" text="Guardar" />

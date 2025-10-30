@@ -1,6 +1,8 @@
 package com.minvoice.demo.desktop.controllers;
 
 import com.minvoice.demo.application.services.interfaces.IInfoInvoiceService;
+import com.minvoice.demo.application.services.interfaces.IXmlInvoiceReader;
+import com.minvoice.demo.application.services.interfaces.IXmlReader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +17,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -25,6 +30,7 @@ import java.util.Arrays;
 public class MainViewController {
     private final ApplicationContext context;
     private final IInfoInvoiceService infoInvoiceService;
+    private final IXmlInvoiceReader service;
 
     @FXML
     private Button addNewInvoice;
@@ -39,6 +45,8 @@ public class MainViewController {
 
     @FXML
     private void initialize() {
+        //service.read("C:/Users/Asus/Downloads/0209202501094123926100120010010000000032069847018.xml");
+
         String totalBilled = String.format("%.2f", infoInvoiceService.getTotalBilled());
         String totalPaid = String.format("%.2f", infoInvoiceService.getTotalPaid());
         String totalPaymentDue = String.format("%.2f", infoInvoiceService.getPaymentDue());
