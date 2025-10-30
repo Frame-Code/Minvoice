@@ -1,4 +1,4 @@
-package com.minvoice.demo.domain.entites;
+package com.minvoice.demo.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import lombok.*;
 public class DetailInvoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    public Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_invoice")

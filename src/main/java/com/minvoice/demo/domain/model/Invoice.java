@@ -1,6 +1,6 @@
-package com.minvoice.demo.domain.entites;
+package com.minvoice.demo.domain.model;
 
-import com.minvoice.demo.domain.enums.TypeInvoice;
+import com.minvoice.demo.domain.model.enums.TypeInvoice;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    public Integer id;
 
     @Enumerated(EnumType.STRING)
     public TypeInvoice typeInvoice;
@@ -49,5 +49,19 @@ public class Invoice {
 
     public void addPayment(PaymentDate paymentDate) {
         paymentDates.add(paymentDate);
+    }
+
+    public double getTotal() {
+        this.total = detailInvoices.stream()
+                .map(DetailInvoice::getItem)
+                .mapToDouble(Item::getPrice)
+                .sum();
+        return this.total;
+    }
+
+    public double getTotalPayments() {
+        return paymentDates.stream()
+                .mapToDouble(PaymentDate::getAmount)
+                .sum();
     }
 }

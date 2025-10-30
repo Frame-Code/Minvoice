@@ -1,4 +1,4 @@
-package com.minvoice.demo.controllers;
+package com.minvoice.demo.desktop.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

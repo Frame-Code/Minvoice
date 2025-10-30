@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="620" prefWidth="720" stylesheets="/views/styles/new-invoice.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.minvoice.demo.controllers.NewInvoiceController">
+<BorderPane prefHeight="620" prefWidth="720" stylesheets="/views/styles/new-invoice.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.minvoice.demo.desktop.controllers.NewInvoiceController">
 
     <!-- Título -->
     <top>

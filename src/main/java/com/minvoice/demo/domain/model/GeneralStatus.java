@@ -1,4 +1,4 @@
-package com.minvoice.demo.domain.entites;
+package com.minvoice.demo.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,20 +6,17 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 @Getter
 @Setter
-@Entity
-public class Item {
+public class GeneralStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    public Integer id;
 
     @Column(nullable = false)
     public String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     public String code;
-
-    @Column(nullable = false)
-    public double price;
 }
