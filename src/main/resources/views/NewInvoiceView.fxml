@@ -49,9 +49,9 @@
                             <TextField fx:id="txtDescripcion" promptText="Ej. Desarrollo app móvil" text="Factura mensual" GridPane.columnIndex="1" GridPane.columnSpan="3" />
 
                             <Label text="Estado:" GridPane.rowIndex="1" />
-                            <ComboBox fx:id="cbEstado" prefHeight="26.0" prefWidth="297.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                            <ComboBox fx:id="cbTipo" prefHeight="26.0" prefWidth="297.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                      <Label text="Tipo:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                     <ComboBox fx:id="cbEstado1" prefHeight="26.0" prefWidth="298.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     <ComboBox fx:id="cbEstado" prefHeight="26.0" prefWidth="298.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         </children>
                   <rowConstraints>
                      <RowConstraints maxHeight="35.200006103515626" minHeight="18.40000801086426" prefHeight="22.400006103515626" />
@@ -62,22 +62,22 @@
                     <!-- Dropzone PDF -->
                     <VBox prefWidth="665.0" spacing="8">
                         <Label text="Archivo XML de la factura:" />
-                        <StackPane fx:id="dropZone" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="80" styleClass="dropzone">
+                        <StackPane fx:id="dropZoneXml" onMouseClicked="#onClicXml" onDragDropped="#onDragDroppedXml" onDragOver="#onDragOverXml" prefHeight="80" styleClass="dropzone">
                             <children>
                                 <VBox alignment="CENTER" prefHeight="90.0" prefWidth="802.0" spacing="6.0">
-                                    <Label fx:id="lblDropZone" styleClass="dropzone-title" text="Arrastra y suelta aquí el PDF" />
-                                    <Label fx:id="lblDropZoneExaminar" styleClass="dropzone-subtitle" text="o haz clic aquí para buscar manualmente" />
+                                    <Label fx:id="lblDropZoneXml" styleClass="dropzone-title" text="Arrastra y suelta aquí el XML" />
+                                    <Label fx:id="lblDropZoneXmlExaminar" styleClass="dropzone-subtitle" text="o haz clic aquí para buscar manualmente" />
                                 </VBox>
                             </children>
                         </StackPane>
                         <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="748.0" spacing="10" />
                   <Label text="Archivo PDF de la factura:" />
-                  <StackPane fx:id="dropZone1" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="100" styleClass="dropzone">
+                  <StackPane fx:id="dropZone" onMouseClicked="#onClickPdf" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="100" styleClass="dropzone">
                      <children>
                         <VBox alignment="CENTER" prefHeight="57.0" prefWidth="748.0" spacing="6.0">
                            <children>
-                              <Label fx:id="lblDropZone1" styleClass="dropzone-title" text="Arrastra y suelta aquí el PDF" />
-                              <Label fx:id="lblDropZoneExaminar1" styleClass="dropzone-subtitle" text="o haz clic aquí para buscar manualmente" />
+                              <Label fx:id="lblDropZone" styleClass="dropzone-title" text="Arrastra y suelta aquí el PDF" />
+                              <Label fx:id="lblDropZoneExaminar" styleClass="dropzone-subtitle" text="o haz clic aquí para buscar manualmente" />
                            </children>
                         </VBox>
                      </children>
@@ -99,9 +99,9 @@
                   </columnConstraints>
                   <children>
                      <Label text="Monto (USD):" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
-                     <TextField fx:id="txtMonto1" prefHeight="26.0" prefWidth="239.0" promptText="0.00" GridPane.columnIndex="3" />
+                     <TextField fx:id="txtMonto" prefHeight="26.0" prefWidth="239.0" promptText="0.00" GridPane.columnIndex="3" />
                      <Label prefHeight="18.0" prefWidth="214.0" text="Fecha de emisión:" />
-                     <DatePicker fx:id="dpFecha1" prefHeight="26.0" prefWidth="367.0" GridPane.columnIndex="1" />
+                     <DatePicker fx:id="dpFecha" prefHeight="26.0" prefWidth="367.0" GridPane.columnIndex="1" />
                      <Label text="Observación" GridPane.rowIndex="1" />
                      <TextField fx:id="txtDescripcion11" prefHeight="26.0" prefWidth="685.0" promptText="Alguna observación" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1" />
                   </children>

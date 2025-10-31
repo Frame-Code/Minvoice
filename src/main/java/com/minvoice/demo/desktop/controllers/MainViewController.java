@@ -45,8 +45,6 @@ public class MainViewController {
 
     @FXML
     private void initialize() {
-        //service.read("C:/Users/Asus/Downloads/0209202501094123926100120010010000000032069847018.xml");
-
         String totalBilled = String.format("%.2f", infoInvoiceService.getTotalBilled());
         String totalPaid = String.format("%.2f", infoInvoiceService.getTotalPaid());
         String totalPaymentDue = String.format("%.2f", infoInvoiceService.getPaymentDue());
@@ -74,7 +72,7 @@ public class MainViewController {
             dialog.setResizable(false);
             dialog.show();
         } catch (IOException e) {
-            log.error("No se pudo abrir la ventana, error msg: " + e.getMessage() + "stackTrace: " + Arrays.toString(e.getStackTrace()));
+            log.error("No se pudo abrir la ventana, error msg: " + e.getCause() + "\n stackTrace: \n" + Arrays.toString(e.getStackTrace()));
             showAlert(Alert.AlertType.ERROR,
                     "No se pudo abrir la ventana",
                     "Error: no se pudo abrir la ventana para generar nueva factura",

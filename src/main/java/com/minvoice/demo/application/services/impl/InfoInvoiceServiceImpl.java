@@ -29,8 +29,8 @@ public class InfoInvoiceServiceImpl implements IInfoInvoiceService {
     public double getTotalPaid() {
         return repository.findAll()
                 .stream()
-                .filter(invoice -> invoice.status.code.trim().equalsIgnoreCase("cnld") ||
-                        invoice.status.code.trim().equalsIgnoreCase("pp"))
+                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("cnld") ||
+                        invoice.getStatus().getCode().trim().equalsIgnoreCase("pp"))
                 .mapToDouble(Invoice::getTotal)
                 .sum();
     }
@@ -39,15 +39,15 @@ public class InfoInvoiceServiceImpl implements IInfoInvoiceService {
     public double getPaymentDue() {
         List<Invoice> invoices = repository.findAll();
         double amountPending = invoices.stream()
-                .filter(invoice -> invoice.status.code.trim().equalsIgnoreCase("pnd"))
+                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("pnd"))
                 .mapToDouble(Invoice::getTotal)
                 .sum();
         double amountPartiallyPaid = invoices.stream()
-                .filter(invoice -> invoice.status.code.trim().equalsIgnoreCase("pp"))
+                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("pp"))
                 .mapToDouble(Invoice::getTotalPayments)
                 .sum();
         double amountPartiallyPaidTotal = invoices.stream()
-                .filter(invoice -> invoice.status.code.trim().equalsIgnoreCase("pp"))
+                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("pp"))
                 .mapToDouble(Invoice::getTotal)
                 .sum();
 

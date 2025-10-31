@@ -17,34 +17,34 @@ import java.util.List;
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
-    public TypeInvoice typeInvoice;
+    private TypeInvoice typeInvoice;
 
     @Column(nullable = false, unique = true)
-    public String noInvoice;
+    private String noInvoice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_generalStatus")
-    public GeneralStatus status;
+    private GeneralStatus status;
 
     @Column(nullable = false)
-    public String description;
+    private String description;
 
-    public String observation;
-
-    @Column(nullable = false)
-    public LocalDateTime  issueDate;
+    private String observation;
 
     @Column(nullable = false)
-    public double total;
+    private LocalDateTime  issueDate;
+
+    @Column(nullable = false)
+    private double total;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<DetailInvoice> detailInvoices;
+    private List<DetailInvoice> detailInvoices;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<PaymentDate> paymentDates;
+    private List<PaymentDate> paymentDates;
 
     public void addDetail(DetailInvoice detailInvoice) {
         detailInvoices.add(detailInvoice);

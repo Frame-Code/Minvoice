@@ -11,15 +11,15 @@ import lombok.*;
 public class InvoiceFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Column(nullable = false)
-    public String fileName;
+    private String fileName;
 
     @Column(nullable = false)
-    public String filePath;
+    private String filePath;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_invoice")
-    public Invoice invoice;
+    private Invoice invoice;
 }

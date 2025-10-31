@@ -12,11 +12,14 @@ import lombok.*;
 public class GeneralStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Column(nullable = false)
-    public String name;
+    private String name;
 
     @Column(nullable = false, unique = true)
-    public String code;
+    private String code;
+
+    @Column(nullable = false)
+    private String statusGroup;
 }

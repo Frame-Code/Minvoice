@@ -16,21 +16,21 @@ import java.time.LocalDateTime;
 public class PaymentDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Column(nullable = false)
-    public double amount;
+    private double amount;
 
-    public String observation;
+    private String observation;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_generalStatus")
-    public GeneralStatus type;
+    private GeneralStatus type;
 
     @Column(nullable = false)
-    public LocalDateTime date;
+    private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_invoice")
-    public Invoice invoice;
+    private Invoice invoice;
 }

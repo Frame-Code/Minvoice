@@ -12,14 +12,14 @@ import lombok.*;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Column(nullable = false)
-    public String name;
+    private String name;
 
     @Column(nullable = false)
-    public String code;
+    private String code;
 
     @Column(nullable = false)
-    public double price;
+    private double price;
 }

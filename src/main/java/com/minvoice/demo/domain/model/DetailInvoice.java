@@ -12,13 +12,13 @@ import lombok.*;
 public class DetailInvoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_invoice")
-    public Invoice invoice;
+    private Invoice invoice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_item")
-    public Item item;
+    private Item item;
 }
