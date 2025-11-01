@@ -22,7 +22,7 @@
 
    <!-- ========== SIDEBAR (igual) ========== -->
    <left>
-      <VBox prefHeight="982.0" prefWidth="271.0" spacing="8.0">
+      <VBox prefHeight="622.0" prefWidth="239.0" spacing="8.0">
          <padding><Insets bottom="24" left="16" right="16" top="24" /></padding>
          <style>-fx-background-color: #2f3b4a;</style>
          <Avatar />
@@ -159,11 +159,13 @@
                         <children>
                            <TableView fx:id="tblTodas" styleClass="table-modern table-compact" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                               <columns>
-                                 <TableColumn prefWidth="120" text="Estado" />
-                                 <TableColumn prefWidth="420" text="Descripción" />
-                                 <TableColumn prefWidth="140" text="Monto" />
-                                 <TableColumn prefWidth="160" text="Fecha" />
-                                 <TableColumn prefWidth="180" text="Archivo" />
+                                 <TableColumn fx:id="colEstadoTodas" prefWidth="140" text="Estado" />
+                                 <TableColumn fx:id="colDescripcionTodas" prefWidth="190" text="Descripción" />
+                                 <TableColumn fx:id="colMontoTodas" prefWidth="100" text="Monto" />
+                                 <TableColumn fx:id="colPorPagarTodas" prefWidth="100" text="Por pagar" />
+                                 <TableColumn fx:id="colFechaTodas" prefWidth="160" text="Fecha" />
+                                 <TableColumn fx:id="colArchivoTodas" prefWidth="280" text="Archivo" />
+                                 <TableColumn fx:id="colOpciones" prefWidth="60" text="Opciones" />
                               </columns>
                            </TableView>
                         </children>
@@ -177,11 +179,11 @@
                         <children>
                            <TableView fx:id="tblPendientes" styleClass="table-modern table-compact" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.8000000000001819" AnchorPane.topAnchor="0.0">
                               <columns>
-                                 <TableColumn prefWidth="120" text="Estado" />
-                                 <TableColumn prefWidth="420" text="Descripción" />
-                                 <TableColumn prefWidth="140" text="Monto" />
-                                 <TableColumn prefWidth="160" text="Fecha" />
-                                 <TableColumn prefWidth="180" text="Archivo" />
+                                 <TableColumn fx:id="colEstadoPendiente" prefWidth="120" text="Estado" />
+                                 <TableColumn fx:id="colDescripcionPendiente" prefWidth="420" text="Descripción" />
+                                 <TableColumn fx:id="colMontoPendiente" prefWidth="140" text="Monto" />
+                                 <TableColumn fx:id="colFechaPendiente" prefWidth="160" text="Fecha" />
+                                 <TableColumn fx:id="colArchivoPendiente" prefWidth="180" text="Archivo" />
                               </columns>
                            </TableView>
                         </children>
@@ -195,11 +197,11 @@
                         <children>
                            <TableView fx:id="tblPagadas" styleClass="table-modern table-compact" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                               <columns>
-                                 <TableColumn prefWidth="120" text="Estado" />
-                                 <TableColumn prefWidth="420" text="Descripción" />
-                                 <TableColumn prefWidth="140" text="Monto" />
-                                 <TableColumn prefWidth="160" text="Fecha" />
-                                 <TableColumn prefWidth="180" text="Archivo" />
+                                 <TableColumn fx:id="colEstadoPagada" prefWidth="120" text="Estado" />
+                                 <TableColumn fx:id="colDescripcionPagada" prefWidth="420" text="Descripción" />
+                                 <TableColumn fx:id="colMontoPagada" prefWidth="140" text="Monto" />
+                                 <TableColumn fx:id="colFechaPagada" prefWidth="160" text="Fecha" />
+                                 <TableColumn fx:id="colArchivoPagada" prefWidth="180" text="Archivo" />
                               </columns>
                            </TableView>
                         </children>

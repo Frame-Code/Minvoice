@@ -19,7 +19,7 @@ public class InvoiceFile {
     @Column(nullable = false)
     private String filePath;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_invoice")
     private Invoice invoice;
 }

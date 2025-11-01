@@ -43,32 +43,20 @@ public class NewInvoiceController {
     private File selectedPdfFile;
     private File selectedXmlFile;
 
-    @FXML
-    private StackPane dropZone;
-    @FXML
-    private StackPane dropZoneXml;
-    @FXML
-    private Label lblDropZone;
-    @FXML
-    private Label lblDropZoneExaminar;
-    @FXML
-    private Label lblDropZoneXml;
-    @FXML
-    private Label lblDropZoneXmlExaminar;
-    @FXML
-    private DatePicker dpFecha;
-    @FXML
-    private TextField txtMonto;
-    @FXML
-    private ComboBox cbEstado;
-    @FXML
-    private ComboBox cbTipo;
-    @FXML
-    private Button btnGuardar;
-    @FXML
-    private TextField txtObservacion;
-    @FXML
-    private TextField txtDescripcion;
+    @FXML private StackPane dropZone;
+    @FXML private StackPane dropZoneXml;
+    @FXML private Label lblDropZone;
+    @FXML private Label lblDropZoneExaminar;
+    @FXML private Label lblDropZoneXml;
+    @FXML private Label lblDropZoneXmlExaminar;
+    @FXML private DatePicker dpFecha;
+    @FXML private TextField txtMonto;
+    @FXML private ComboBox cbEstado;
+    @FXML private ComboBox cbTipo;
+    @FXML private Button btnGuardar;
+    @FXML private TextField txtObservacion;
+    @FXML private TextField txtDescripcion;
+
 
     @FXML
     public void saveInvoice(ActionEvent actionEvent) {

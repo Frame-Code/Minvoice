@@ -1,6 +1,7 @@
 package com.minvoice.demo.application.services.impl;
 
 import com.minvoice.demo.application.services.dto.InvoiceDto;
+import com.minvoice.demo.application.services.dto.InvoiceTableDto;
 import com.minvoice.demo.application.services.exceptions.ItemNotFoundException;
 import com.minvoice.demo.application.services.exceptions.StatusNotFoundException;
 import com.minvoice.demo.application.services.interfaces.IFileService;
@@ -8,6 +9,7 @@ import com.minvoice.demo.application.services.interfaces.IInvoiceService;
 import com.minvoice.demo.domain.model.*;
 import com.minvoice.demo.domain.repository.IGeneralStatusRepository;
 import com.minvoice.demo.domain.repository.IInvoiceFileRepository;
+import com.minvoice.demo.domain.repository.IInvoiceRepository;
 import com.minvoice.demo.domain.repository.IItemRepository;
 import com.minvoice.demo.application.config.AppProperties;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
     private final IGeneralStatusRepository statusRepository;
     private final IItemRepository itemRepository;
     private final IFileService fileService;
+    private final IInvoiceRepository invoiceRepository;
     private final AppProperties properties;
 
     @Override
@@ -88,5 +91,23 @@ public class InvoiceServiceImpl implements IInvoiceService {
                 .build();
 
         invoiceFileRepository.save(file);
+    }
+
+    @Override
+    public List<InvoiceTableDto> FindAllToTable() {
+        var invoicesFile = invoiceFileRepository.findAll();
+        List<InvoiceTableDto> invoicesDto = new ArrayList<>();
+        invoicesFile.forEach(invoice -> {
+            invoicesDto.add(new InvoiceTableDto(
+                    invoice.getInvoice().getStatus().getName(),
+                    invoice.getInvoice().getDescription(),
+                    invoice.getInvoice().getTotal(),
+                    invoice.getInvoice().getTotal() - invoice.getInvoice().getTotalPayments(),
+                    invoice.getInvoice().getIssueDate(),
+                    invoice.getFileName()
+            ));
+        });
+
+        return invoicesDto;
     }
 }
