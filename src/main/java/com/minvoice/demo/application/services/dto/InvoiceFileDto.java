@@ -6,6 +6,6 @@ import java.util.List;
 public record InvoiceFileDto(
         String noInvoice,
         LocalDateTime issueDate,
-        List<String> itemDescriptions
+        List<String> itemsCode
 ) {
 }

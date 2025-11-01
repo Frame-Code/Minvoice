@@ -25,7 +25,7 @@ public class Invoice {
     @Column(nullable = false, unique = true)
     private String noInvoice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_generalStatus")
     private GeneralStatus status;
 
@@ -40,10 +40,10 @@ public class Invoice {
     @Column(nullable = false)
     private double total;
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<DetailInvoice> detailInvoices;
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PaymentDate> paymentDates;
 
     public void addDetail(DetailInvoice detailInvoice) {
@@ -55,16 +55,17 @@ public class Invoice {
     }
 
     public double getTotal() {
-        this.total = detailInvoices.stream()
-                .map(DetailInvoice::getItem)
-                .mapToDouble(Item::getPrice)
-                .sum();
+        for (DetailInvoice detail : detailInvoices) {
+            this.total += detail.getItem().getPrice();
+        }
         return this.total;
     }
 
     public double getTotalPayments() {
-        return paymentDates.stream()
-                .mapToDouble(PaymentDate::getAmount)
-                .sum();
+        double total = 0;
+        for (PaymentDate payment : paymentDates) {
+            total += payment.getAmount();
+        }
+        return total;
     }
 }

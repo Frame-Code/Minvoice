@@ -1,7 +1,9 @@
 package com.minvoice.demo.desktop.controllers;
 
+import com.minvoice.demo.application.services.dto.InvoiceDto;
 import com.minvoice.demo.application.services.dto.InvoiceFileDto;
 import com.minvoice.demo.application.services.interfaces.IGeneralStatusService;
+import com.minvoice.demo.application.services.interfaces.IInvoiceService;
 import com.minvoice.demo.application.services.interfaces.IItemService;
 import com.minvoice.demo.application.services.interfaces.IXmlInvoiceReader;
 import com.minvoice.demo.domain.model.enums.TypeInvoice;
@@ -35,8 +37,11 @@ public class NewInvoiceController {
     private final IXmlInvoiceReader reader;
     private final IItemService itemService;
     private final IGeneralStatusService statusService;
+    private final IInvoiceService invoiceService;
 
     private InvoiceFileDto invoiceDto;
+    private File selectedPdfFile;
+    private File selectedXmlFile;
 
     @FXML
     private StackPane dropZone;
@@ -59,18 +64,41 @@ public class NewInvoiceController {
     @FXML
     private ComboBox cbTipo;
     @FXML
-    private Label lblArchivo;
-    @FXML
-    private Button btnCancelar;
-    @FXML
     private Button btnGuardar;
+    @FXML
+    private TextField txtObservacion;
+    @FXML
+    private TextField txtDescripcion;
 
-    private File selectedPdfFile;
-    private File selectedXmlFile;
+    @FXML
+    public void saveInvoice(ActionEvent actionEvent) {
+        if(selectedPdfFile == null || selectedXmlFile == null || txtMonto.getText().isEmpty() || txtMonto.getText().isBlank() ||
+        dpFecha.getValue() == null || txtDescripcion.getText().isBlank() || txtDescripcion.getText().isEmpty() || invoiceDto.itemsCode().isEmpty()) {
+            showMessage("No se pudo crear la factura, faltan datos por llenar", Alert.AlertType.ERROR);
+            return;
+        }
+        TypeInvoice type = TypeInvoice.valueOf(cbTipo.getValue().toString());
+        String status = cbEstado.getValue().toString().split("-")[1].trim();
+        InvoiceDto invoice = new InvoiceDto(
+                invoiceDto.noInvoice(),
+                type,
+                status,
+                txtDescripcion.getText(),
+                txtObservacion.getText(),
+                invoiceDto.issueDate(),
+                invoiceDto.itemsCode(),
+                selectedPdfFile.getName(),
+                selectedPdfFile.getPath()
+        );
+        invoiceService.save(invoice);
+        showMessage("Factura creada correctamente", Alert.AlertType.INFORMATION);
+
+
+    }
 
     private void loadInvoiceInfo(String filePath) {
         invoiceDto = reader.read(filePath);
-        var itemPrice = itemService.findTotalPricesByCodes(invoiceDto.itemDescriptions());
+        var itemPrice = itemService.findTotalPricesByCodes(invoiceDto.itemsCode());
         if(itemPrice.isEmpty()) {
             showMessage("No se puedo encontrar los items de la factura ", Alert.AlertType.ERROR);
             selectedPdfFile = null;
@@ -195,8 +223,8 @@ public class NewInvoiceController {
         dragEvent.consume();
     }
 
-    @FXML
-    public void chooseFile(Event event, String description, String format) {
+
+    public String chooseFile(Event event, String description, String format) {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, format));
         File file = chooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
@@ -205,8 +233,9 @@ public class NewInvoiceController {
             selectedPdfFile = file;
             dropZone.setStyle("-fx-border-color: green; -fx-border-width: 2;");
             showMessage("Archivo seleccionado: " + file.getName(), Alert.AlertType.INFORMATION);
-            lblArchivo.setText("Archivo seleccionado: " + file.getName());
+            return file.getName();
         }
+        return null;
     }
 
     @FXML
@@ -216,18 +245,23 @@ public class NewInvoiceController {
     }
 
     @FXML
-    public void saveInvoice(ActionEvent actionEvent) {
-        showMessage("Se va guardar la factura", Alert.AlertType.INFORMATION);
-    }
-
-    @FXML
     public void onClicXml(MouseEvent mouseEvent) {
-        chooseFile(mouseEvent, "ARCHIVOS XML", ".xml");
+        String fileName = chooseFile(mouseEvent, "ARCHIVOS XML", "*.xml");
+        if(fileName != null) {
+            dropZoneXml.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+            lblDropZoneXml.setText("XML cargado: " + fileName);
+            lblDropZoneXmlExaminar.setText(null);
+        }
     }
 
     @FXML
     public void onClickPdf(MouseEvent mouseEvent) {
-        chooseFile(mouseEvent, "ARCHIVOS PDF", ".pdf");
+        String fileName = chooseFile(mouseEvent, "ARCHIVOS PDF", "*.pdf");
+        if(fileName != null) {
+            dropZone.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+            lblDropZone.setText("Factura cargada: " + fileName);
+            lblDropZoneExaminar.setText(null);
+        }
     }
 
 }

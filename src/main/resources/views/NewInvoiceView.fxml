@@ -103,7 +103,7 @@
                      <Label prefHeight="18.0" prefWidth="214.0" text="Fecha de emisión:" />
                      <DatePicker fx:id="dpFecha" prefHeight="26.0" prefWidth="367.0" GridPane.columnIndex="1" />
                      <Label text="Observación" GridPane.rowIndex="1" />
-                     <TextField fx:id="txtDescripcion11" prefHeight="26.0" prefWidth="685.0" promptText="Alguna observación" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1" />
+                     <TextField fx:id="txtObservacion" prefHeight="26.0" prefWidth="685.0" promptText="Alguna observación" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1" />
                   </children>
                   <rowConstraints>
                      <RowConstraints maxHeight="43.20003356933594" minHeight="1.1999877929687557" prefHeight="24.000027465820324" />

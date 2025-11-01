@@ -18,10 +18,13 @@ public class InfoInvoiceServiceImpl implements IInfoInvoiceService {
 
     @Override
     public double getTotalBilled() {
-        return repository.findAll()
-                .stream()
-                .mapToDouble(Invoice::getTotal)
-                .sum();
+        var invoices = repository.findAll()
+                .stream().toList();
+        double total = 0;
+        for (Invoice invoice : invoices) {
+            total += invoice.getTotal();
+        }
+        return total;
 
     }
 

@@ -7,9 +7,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IGeneralStatusRepository extends JpaRepository<GeneralStatus, Integer> {
     @Query(value = "SELECT g FROM GeneralStatus g WHERE LOWER(g.statusGroup) = :statusGroup ")
     List<GeneralStatus> FindByGroup(@Param("statusGroup") String statusGroup);
+
+    @Query(value = "SELECT g FROM GeneralStatus g WHERE LOWER(g.code) = :code")
+    Optional<GeneralStatus> FindByCode(@Param("code") String code);
 }
