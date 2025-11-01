@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class InvoiceTableDto {
+    private int idInvoice;
     private String status;
     private String description;
     private double mount;

@@ -164,8 +164,8 @@
                                  <TableColumn fx:id="colMontoTodas" prefWidth="100" text="Monto" />
                                  <TableColumn fx:id="colPorPagarTodas" prefWidth="100" text="Por pagar" />
                                  <TableColumn fx:id="colFechaTodas" prefWidth="160" text="Fecha" />
-                                 <TableColumn fx:id="colArchivoTodas" prefWidth="280" text="Archivo" />
-                                 <TableColumn fx:id="colOpciones" prefWidth="60" text="Opciones" />
+                                 <TableColumn fx:id="colArchivoTodas" prefWidth="290" text="Archivo" />
+                                 <TableColumn fx:id="colOpcionesTodas" prefWidth="40" text="Opciones" />
                               </columns>
                            </TableView>
                         </children>

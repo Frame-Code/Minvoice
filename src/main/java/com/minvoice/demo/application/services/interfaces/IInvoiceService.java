@@ -8,4 +8,5 @@ import java.util.List;
 public interface IInvoiceService {
     void save(InvoiceDto invoice);
     List<InvoiceTableDto> FindAllToTable();
+    void deleteById(int id);
 }

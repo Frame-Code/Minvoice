@@ -99,6 +99,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
         List<InvoiceTableDto> invoicesDto = new ArrayList<>();
         invoicesFile.forEach(invoice -> {
             invoicesDto.add(new InvoiceTableDto(
+                    invoice.getInvoice().getId(),
                     invoice.getInvoice().getStatus().getName(),
                     invoice.getInvoice().getDescription(),
                     invoice.getInvoice().getTotal(),
@@ -109,5 +110,10 @@ public class InvoiceServiceImpl implements IInvoiceService {
         });
 
         return invoicesDto;
+    }
+
+    @Override
+    public void deleteById(int id) {
+
     }
 }
