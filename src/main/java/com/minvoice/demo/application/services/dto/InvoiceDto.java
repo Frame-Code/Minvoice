@@ -2,6 +2,7 @@ package com.minvoice.demo.application.services.dto;
 
 import com.minvoice.demo.domain.model.enums.TypeInvoice;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public record InvoiceDto(
         String observation,
         LocalDateTime issueDate,
         List<String> itemsCode,
-        String fileName,
-        String filePath
+        File pdfFile,
+        File xmlFile
         ) {
 }

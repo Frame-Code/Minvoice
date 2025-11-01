@@ -87,8 +87,9 @@ public class NewInvoiceController {
                 txtObservacion.getText(),
                 invoiceDto.issueDate(),
                 invoiceDto.itemsCode(),
-                selectedPdfFile.getName(),
-                selectedPdfFile.getPath()
+                selectedPdfFile,
+                selectedXmlFile
+
         );
         invoiceService.save(invoice);
         showMessage("Factura creada correctamente", Alert.AlertType.INFORMATION);

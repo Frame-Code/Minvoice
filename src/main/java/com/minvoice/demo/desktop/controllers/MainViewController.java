@@ -45,7 +45,6 @@ public class MainViewController {
 
     @FXML
     private void initialize() {
-        var a = infoInvoiceService.getTotalBilled();
         String totalBilled = String.format("%.2f", infoInvoiceService.getTotalBilled());
         String totalPaid = String.format("%.2f", infoInvoiceService.getTotalPaid());
         String totalPaymentDue = String.format("%.2f", infoInvoiceService.getPaymentDue());
