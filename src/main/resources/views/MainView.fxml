@@ -159,7 +159,7 @@
                         <children>
                            <TableView fx:id="tblTodas" styleClass="table-modern table-compact" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
                               <columns>
-                                 <TableColumn fx:id="colEstadoTodas" prefWidth="140" text="Estado" />
+                                 <TableColumn fx:id="colEstadoTodas" prefWidth="150" text="Estado" />
                                  <TableColumn fx:id="colDescripcionTodas" prefWidth="190" text="Descripción" />
                                  <TableColumn fx:id="colMontoTodas" prefWidth="100" text="Monto" />
                                  <TableColumn fx:id="colPorPagarTodas" prefWidth="100" text="Por pagar" />

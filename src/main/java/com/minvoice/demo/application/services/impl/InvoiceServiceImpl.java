@@ -100,7 +100,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
         invoicesFile.forEach(invoice -> {
             invoicesDto.add(new InvoiceTableDto(
                     invoice.getInvoice().getId(),
-                    invoice.getInvoice().getStatus().getName(),
+                    invoice.getId(),
+                    invoice.getInvoice().getStatus().getName() + " - " + invoice.getInvoice().getStatus().getCode(),
                     invoice.getInvoice().getDescription(),
                     invoice.getInvoice().getTotal(),
                     invoice.getInvoice().getTotal() - invoice.getInvoice().getTotalPayments(),
@@ -114,7 +115,26 @@ public class InvoiceServiceImpl implements IInvoiceService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void updateStatus(String statusCode, int idInvoice) {
+        Optional<GeneralStatus> status = statusRepository.FindByCode(statusCode);
+        if(status.isEmpty()) {
+            log.error("Error: can't find status with status code: " + statusCode);
+            throw new StatusNotFoundException();
+        }
 
+        Optional<Invoice> invoice = invoiceRepository.findById(idInvoice);
+        if(invoice.isEmpty()) {
+            log.error("Error: can't find invoice with id: " + idInvoice);
+            throw new StatusNotFoundException();
+        }
+
+        invoice.get().setStatus(status.get());
+        invoiceRepository.save(invoice.get());
+    }
+
+
+    @Override
+    public void deleteById(int id) {
+        invoiceFileRepository.deleteById(id);
     }
 }

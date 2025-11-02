@@ -174,6 +174,12 @@ public class MainViewController {
                     InvoiceTableDto factura = getTableView().getItems().get(getIndex());
                     if (factura != null) {
                         factura.setStatus(comboBox.getValue());
+                        String status = comboBox.getValue().split("-")[1].trim();
+                        invoiceService.updateStatus(status, factura.getIdInvoice());
+                        showAlert(Alert.AlertType.INFORMATION,
+                                "Estado actualizado correctamente",
+                                "Estado de la factura actualizado a: " + comboBox.getValue(),
+                                null);
                     }
                 });
             }
@@ -282,9 +288,10 @@ public class MainViewController {
                     confirm.showAndWait().ifPresent(bt -> {
                         if (bt == ButtonType.YES) {
                             try {
-                                invoiceService.deleteById(factura.getIdInvoice());
+                                invoiceService.deleteById(factura.getIdInvoiceFile());
                                 getTableView().getItems().remove(factura);
                                 refreshTotals();
+                                showAlert(Alert.AlertType.INFORMATION, "Factura eliminada correctamente", "La factura seleccionada fue eliminada correctamente", null);
                             } catch (Exception ex) {
                                 showAlert(Alert.AlertType.ERROR, "Error", "No se pudo eliminar", ex.getMessage());
                             }

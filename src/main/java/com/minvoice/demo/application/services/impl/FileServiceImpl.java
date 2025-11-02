@@ -55,7 +55,7 @@ public class FileServiceImpl implements IFileService {
             return new ResponseDto(null, true);
 
         } catch (Exception e) {
-            log.error("Error reading file: " + e.getCause() + "\n" + Arrays.toString(e.getStackTrace()));
+            log.error("Error opening file explorer: " + e.getCause() + "\n" + Arrays.toString(e.getStackTrace()));
             return new ResponseDto("Error interno, revisar logs", false);
         }
     }
