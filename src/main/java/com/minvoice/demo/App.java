@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -44,6 +45,7 @@ public class App extends Application {
 
         stage.setScene(scene);
         stage.setTitle("Management invoices");
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/minvoices.png"))));
         stage.setMaximized(true);
         stage.show();
     }

@@ -6,7 +6,7 @@ import com.minvoice.demo.application.services.interfaces.IGeneralStatusService;
 import com.minvoice.demo.application.services.interfaces.IInvoiceService;
 import com.minvoice.demo.application.services.interfaces.IItemService;
 import com.minvoice.demo.application.services.interfaces.IXmlInvoiceReader;
-import com.minvoice.demo.domain.model.enums.TypeInvoice;
+import com.minvoice.demo.domain.enums.TypeInvoice;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -25,7 +25,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Arrays;

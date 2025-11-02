@@ -1,4 +1,4 @@
-package com.minvoice.demo.domain.model.enums;
+package com.minvoice.demo.domain.enums;
 
 public enum PaymentType {
     bankTransfer,

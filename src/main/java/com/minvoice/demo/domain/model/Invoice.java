@@ -1,6 +1,6 @@
 package com.minvoice.demo.domain.model;
 
-import com.minvoice.demo.domain.model.enums.TypeInvoice;
+import com.minvoice.demo.domain.enums.TypeInvoice;
 import jakarta.persistence.*;
 import lombok.*;
 

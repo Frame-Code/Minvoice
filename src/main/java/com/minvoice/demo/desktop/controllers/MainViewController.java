@@ -1,10 +1,13 @@
 package com.minvoice.demo.desktop.controllers;
 
-import com.minvoice.demo.application.services.dto.AddPaymentDto;
+import com.gluonhq.charm.glisten.control.Avatar;
+import com.minvoice.demo.application.config.AppProperties;
 import com.minvoice.demo.application.services.dto.InvoiceTableDto;
+import com.minvoice.demo.application.services.dto.StatusInvoiceDto;
 import com.minvoice.demo.application.services.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -25,11 +29,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -40,12 +43,15 @@ public class MainViewController {
     private final IInvoiceService invoiceService;
     private final IGeneralStatusService statusService;
     private final IFileService fileService;
+    private final AppProperties properties;
 
     @FXML private Button addNewInvoice;
     @FXML private Label lblTotalFacturado;
     @FXML private Label lblTotalPagado;
     @FXML private Label lblTotalPendiente;
     @FXML private Label lblCantidadFacturas;
+    @FXML private TextField txtBuscar;
+    @FXML private Avatar avatar;
 
     @FXML private TableView<InvoiceTableDto> tblTodas;
     @FXML private TableColumn<InvoiceTableDto, String> colEstadoTodas;
@@ -62,6 +68,8 @@ public class MainViewController {
     @FXML private TableColumn<InvoiceTableDto, Double> colMontoPendiente;
     @FXML private TableColumn<InvoiceTableDto, LocalDateTime> colFechaPendiente;
     @FXML private TableColumn<InvoiceTableDto, String> colArchivoPendiente;
+    @FXML private TableColumn<InvoiceTableDto, Double> colPorPagarPendiente;
+    @FXML private TableColumn<InvoiceTableDto, Void> colOpcionesPendiente;
 
     @FXML private TableView<InvoiceTableDto> tblPagadas;
     @FXML private TableColumn<InvoiceTableDto, String> colEstadoPagada;
@@ -69,10 +77,13 @@ public class MainViewController {
     @FXML private TableColumn<InvoiceTableDto, Double> colMontoPagada;
     @FXML private TableColumn<InvoiceTableDto, LocalDateTime> colFechaPagada;
     @FXML private TableColumn<InvoiceTableDto, String> colArchivoPagada;
+    @FXML private TableColumn<InvoiceTableDto, Double> colPorPagarPagada;
+    @FXML private TableColumn<InvoiceTableDto, Void> colOpcionesPagada;
 
 
     @FXML
     private void initialize() {
+        avatar.setImage(new Image(properties.getAvatar()));
         String totalBilled = String.format("%.2f", infoInvoiceService.getTotalBilled());
         String totalPaid = String.format("%.2f", infoInvoiceService.getTotalPaid());
         String totalPaymentDue = String.format("%.2f", infoInvoiceService.getPaymentDue());
@@ -83,8 +94,16 @@ public class MainViewController {
         lblTotalPendiente.setText(totalPaymentDue);
         lblCantidadFacturas.setText(invoiceCount);
 
-        initTable(tblTodas, colEstadoTodas, colDescripcionTodas, colMontoTodas, colPorPagarTodas, colFechaTodas, colArchivoTodas);
+        initTable(tblTodas, colEstadoTodas, colDescripcionTodas, colMontoTodas, colPorPagarTodas, colFechaTodas, colArchivoTodas, List.of());
+        initTable(tblPendientes, colEstadoPendiente, colDescripcionPendiente,
+                colMontoPendiente, colPorPagarPendiente, colFechaPendiente, colArchivoPendiente,
+                List.of(new StatusInvoiceDto("pnd", "Pendiente"), new StatusInvoiceDto("pp", "Parcialmente pagada")));
+        initTable(tblPagadas, colEstadoPagada, colDescripcionPagada, colMontoPagada,
+                colPorPagarPagada, colFechaPagada, colArchivoPagada, List.of(new StatusInvoiceDto("cnd", "Cancelada")));
         initActionsColumn(tblTodas, colOpcionesTodas);
+        initActionsColumn(tblPagadas, colOpcionesPagada);
+        initActionsColumn(tblPendientes, colOpcionesPendiente);
+
     }
 
     private void initTable(TableView<InvoiceTableDto> table,
@@ -93,7 +112,8 @@ public class MainViewController {
                            TableColumn<InvoiceTableDto, Double> colMonto,
                            TableColumn<InvoiceTableDto, Double> colPorPagar,
                            TableColumn<InvoiceTableDto, LocalDateTime> colFecha,
-                           TableColumn<InvoiceTableDto, String> colArchivo) {
+                           TableColumn<InvoiceTableDto, String> colArchivo,
+                           List<StatusInvoiceDto> status) {
         initCombo(colEstado);
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("description"));
         colMonto.setCellValueFactory(new PropertyValueFactory<>("mount"));
@@ -159,7 +179,27 @@ public class MainViewController {
 
         var invoices = invoiceService.FindAllToTable();
         ObservableList<InvoiceTableDto> data = FXCollections.observableArrayList(invoices);
-        table.setItems(data);
+        FilteredList<InvoiceTableDto> filteredData = new FilteredList<>(data, d -> {
+            if(status == null || status.isEmpty()) return true;
+            return status.stream().anyMatch(s ->
+                    d.getStatus().trim().toLowerCase().contains(s.name().toLowerCase().trim()));
+        });
+        table.setItems(filteredData);
+        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(invoice -> {
+                if (newValue == null || newValue.isBlank()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (invoice.getDescription().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (invoice.getStatus().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else return invoice.getFileName().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
     }
 
     private void initCombo(TableColumn<InvoiceTableDto, String> colEstado) {
@@ -220,6 +260,7 @@ public class MainViewController {
             dialog.initModality(Modality.WINDOW_MODAL);
             dialog.initOwner(addNewInvoice.getScene().getWindow());
             dialog.setScene(scene);
+            dialog.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/minvoices.png"))));
             dialog.setResizable(false);
             dialog.showAndWait();
             initialize();
@@ -336,6 +377,7 @@ public class MainViewController {
             dialog.setTitle("Add payment");
             dialog.initModality(Modality.WINDOW_MODAL);
             dialog.initOwner(addNewInvoice.getScene().getWindow());
+            dialog.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/minvoices.png"))));
             dialog.setScene(scene);
             dialog.setResizable(false);
 

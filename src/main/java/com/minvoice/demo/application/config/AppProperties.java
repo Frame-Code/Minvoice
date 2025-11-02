@@ -17,6 +17,6 @@ import org.springframework.validation.annotation.Validated;
 @Setter
 public class AppProperties {
     private String invoiceFileNewPath;
-
+    private String avatar;
 
 }

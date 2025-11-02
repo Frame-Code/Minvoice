@@ -1,6 +1,6 @@
 package com.minvoice.demo.application.services.dto;
 
-import com.minvoice.demo.domain.model.enums.TypeInvoice;
+import com.minvoice.demo.domain.enums.TypeInvoice;
 
 import java.io.File;
 import java.time.LocalDateTime;
