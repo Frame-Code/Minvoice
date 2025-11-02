@@ -1,5 +1,6 @@
 package com.minvoice.demo.desktop.controllers;
 
+import com.minvoice.demo.application.services.dto.AddPaymentDto;
 import com.minvoice.demo.application.services.dto.InvoiceTableDto;
 import com.minvoice.demo.application.services.interfaces.*;
 import javafx.collections.FXCollections;
@@ -24,8 +25,11 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -219,7 +223,6 @@ public class MainViewController {
                     "Error: no se pudo abrir la ventana para generar nueva factura",
                     null);
         }
-
     }
 
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
@@ -311,10 +314,31 @@ public class MainViewController {
         colOpciones.setPrefWidth(180);
     }
 
+    private void onAddPayment(InvoiceTableDto invoice) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AddPaymentDialog.fxml"));
+            loader.setControllerFactory(context::getBean);
+            Parent root = loader.load();
+            AddPaymentDialogController controller = loader.getController();
 
+            controller.setInvoiceId(invoice.getIdInvoice());
 
-    private void onAddPayment(InvoiceTableDto row) {
-        showAlert(Alert.AlertType.INFORMATION, "Pago", null, "Abrir modal de pago para factura ID: " + row.getIdInvoice());
+            Scene scene = new Scene(root);
+            Stage dialog = new Stage();
+            dialog.setTitle("Add payment");
+            dialog.initModality(Modality.WINDOW_MODAL);
+            dialog.initOwner(addNewInvoice.getScene().getWindow());
+            dialog.setScene(scene);
+            dialog.setResizable(false);
+
+            dialog.showAndWait();
+            refreshTotals();
+
+        } catch (Exception ex) {
+            log.error("Error: can't fin pay dialog \n" + ex.getCause() + "StackTrace\n" + Arrays.toString(ex.getStackTrace()));
+            showAlert(Alert.AlertType.ERROR, "Error", null,
+                    "No se pudo abrir el diálogo de pago.\n" + ex.getMessage());
+        }
     }
 
     private void refreshTotals() {
@@ -328,4 +352,7 @@ public class MainViewController {
         return new File(row.getFilePath());
     }
 
+    public void UpdateInfo(ActionEvent actionEvent) {
+        initialize();
+    }
 }

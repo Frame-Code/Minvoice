@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="260.0" prefWidth="825.0" stylesheets="/views/styles/new-invoice.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.minvoice.demo.desktop.controllers.AddPaymentDialogController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <padding><Insets bottom="12" left="20" right="20" top="16" /></padding>
+            <Label text="Agregar pago a la factura">
+                <font><Font name="System Bold" size="20" /></font>
+            </Label>
+        </HBox>
+    </top>
+   <bottom>
+            <VBox prefHeight="202.0" prefWidth="794.0" BorderPane.alignment="CENTER">
+                <GridPane hgap="10" prefHeight="132.0" prefWidth="826.0" vgap="12">
+                    <padding>
+                        <Insets bottom="10" left="12" right="12" top="10" />
+                    </padding>
+
+                    <Label text="Monto:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtMonto" prefHeight="26.0" prefWidth="198.0" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Tipo de pago:" GridPane.columnIndex="2" />
+                    <ComboBox fx:id="cbTipoPago" prefHeight="26.0" prefWidth="327.0" promptText="Selecciona un tipo" GridPane.columnIndex="3" />
+
+                    <Label text="Fecha:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <DatePicker fx:id="dpFecha" prefHeight="26.0" prefWidth="314.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label text="Observación:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextArea fx:id="txtObservacion" prefRowCount="2" promptText="Opcional" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                 <columnConstraints>
+                    <ColumnConstraints maxWidth="104.1999755859375" minWidth="71.39998779296874" prefWidth="88.1999755859375" />
+                    <ColumnConstraints maxWidth="466.6000122070312" minWidth="192.0000122070313" prefWidth="260.400048828125" />
+                    <ColumnConstraints maxWidth="466.6000122070312" minWidth="78.79998779296875" prefWidth="85.199951171875" />
+                    <ColumnConstraints maxWidth="770.3999999999999" minWidth="304.3999755859375" prefWidth="327.9999877929687" />
+                 </columnConstraints>
+                 <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints maxHeight="38.40001831054687" minHeight="10.399980163574227" prefHeight="27.19998779296874" />
+                    <RowConstraints maxHeight="42.400000000000006" minHeight="17.600018310546872" prefHeight="21.600012207031256" />
+                 </rowConstraints>
+                </GridPane>
+                <Label fx:id="lblError" textFill="red" visible="false" />
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button onAction="#onCancel" prefHeight="26.0" prefWidth="122.0" text="Cancelar" />
+                    <Button onAction="#onSave" prefHeight="27.0" prefWidth="126.0" style="-fx-background-color: #28a745; -fx-text-fill: white;" text="Guardar" />
+                </HBox>
+            </VBox>
+   </bottom>
+   <padding>
+      <Insets right="10.0" />
+   </padding>
+</BorderPane>

@@ -30,31 +30,21 @@ public class InfoInvoiceServiceImpl implements IInfoInvoiceService {
 
     @Override
     public double getTotalPaid() {
-        return repository.findAll()
+        var invoices = repository.findAll()
                 .stream()
-                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("cnld") ||
+                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("cnd") ||
                         invoice.getStatus().getCode().trim().equalsIgnoreCase("pp"))
-                .mapToDouble(Invoice::getTotal)
-                .sum();
+                .toList();
+        double total = 0;
+        for (Invoice invoice : invoices) {
+            total += invoice.getTotalPayments();
+        }
+        return total;
     }
 
     @Override
     public double getPaymentDue() {
-        List<Invoice> invoices = repository.findAll();
-        double amountPending = invoices.stream()
-                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("pnd"))
-                .mapToDouble(Invoice::getTotal)
-                .sum();
-        double amountPartiallyPaid = invoices.stream()
-                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("pp"))
-                .mapToDouble(Invoice::getTotalPayments)
-                .sum();
-        double amountPartiallyPaidTotal = invoices.stream()
-                .filter(invoice -> invoice.getStatus().getCode().trim().equalsIgnoreCase("pp"))
-                .mapToDouble(Invoice::getTotal)
-                .sum();
-
-        return amountPending + (amountPartiallyPaidTotal - amountPartiallyPaid);
+        return getTotalBilled() - getTotalPaid();
     }
 
     @Override

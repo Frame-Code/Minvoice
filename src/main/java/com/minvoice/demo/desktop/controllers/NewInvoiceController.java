@@ -25,6 +25,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -213,7 +214,7 @@ public class NewInvoiceController {
     }
 
 
-    public String chooseFile(Event event, String description, String format) {
+    public File chooseFile(Event event, String description, String format) {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, format));
         File file = chooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
@@ -222,7 +223,7 @@ public class NewInvoiceController {
             selectedPdfFile = file;
             dropZone.setStyle("-fx-border-color: green; -fx-border-width: 2;");
             showMessage("Archivo seleccionado: " + file.getName(), Alert.AlertType.INFORMATION);
-            return file.getName();
+            return file;
         }
         return null;
     }
@@ -235,21 +236,24 @@ public class NewInvoiceController {
 
     @FXML
     public void onClicXml(MouseEvent mouseEvent) {
-        String fileName = chooseFile(mouseEvent, "ARCHIVOS XML", "*.xml");
-        if(fileName != null) {
+        File file = chooseFile(mouseEvent, "ARCHIVOS XML", "*.xml");
+        if(file != null) {
             dropZoneXml.setStyle("-fx-border-color: green; -fx-border-width: 2;");
-            lblDropZoneXml.setText("XML cargado: " + fileName);
+            lblDropZoneXml.setText("XML cargado: " + file.getName());
             lblDropZoneXmlExaminar.setText(null);
+            selectedXmlFile = file;
+            loadInvoiceInfo(file.getPath());
         }
     }
 
     @FXML
     public void onClickPdf(MouseEvent mouseEvent) {
-        String fileName = chooseFile(mouseEvent, "ARCHIVOS PDF", "*.pdf");
-        if(fileName != null) {
+        File file = chooseFile(mouseEvent, "ARCHIVOS PDF", "*.pdf");
+        if(file != null) {
             dropZone.setStyle("-fx-border-color: green; -fx-border-width: 2;");
-            lblDropZone.setText("Factura cargada: " + fileName);
+            lblDropZone.setText("Factura cargada: " + file.getName());
             lblDropZoneExaminar.setText(null);
+            selectedPdfFile = file;
         }
     }
 

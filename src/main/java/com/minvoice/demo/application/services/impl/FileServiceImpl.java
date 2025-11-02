@@ -22,7 +22,7 @@ public class FileServiceImpl implements IFileService {
     public void copyFile(File origin, String newPath) {
         try{
             Path source = origin.toPath();
-            Path target = Path.of(newPath, origin.getName());
+            Path target = Path.of(newPath);
             Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
         }catch (IOException e) {
             log.error("Error coping file: " + e.getCause() + "\n" + Arrays.toString(e.getStackTrace()));

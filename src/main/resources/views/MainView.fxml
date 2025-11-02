@@ -147,7 +147,7 @@
 
          <HBox alignment="CENTER_RIGHT" spacing="10">
             <TextField fx:id="txtBuscar" prefHeight="32.0" prefWidth="458.0" promptText="Buscar factura..." />
-            <Button fx:id="btnSeach" prefHeight="32.0" prefWidth="150.0" style="-fx-background-color:#2f7df4;-fx-text-fill:white;-fx-background-radius:8;-fx-font-weight:bold;" text="Buscar factura" />
+            <Button fx:id="btnSeach1" prefHeight="32.0" prefWidth="150.0" style="-fx-background-color:#2f7df4;-fx-text-fill:white;-fx-background-radius:8;-fx-font-weight:bold;" text="Buscar factura" />
 
          </HBox>
 
@@ -218,7 +218,8 @@
       <HBox spacing="10">
          <padding><Insets bottom="8" left="20" right="20" top="8" /></padding>
          <style>-fx-background-color:#f7f8fa;-fx-border-color:#e6e8eb;-fx-border-width:1 0 0 0;</style>
-         <Label fx:id="lblStatus" text="Listo." />
+         <Label fx:id="lblStatus" prefHeight="18.0" prefWidth="918.0" text="Listo." />
+         <Button fx:id="btnUpdate"  onAction="#UpdateInfo" alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="26.0" prefWidth="124.0" style="-fx-background-color:#2f7df4;-fx-text-fill:white;-fx-background-radius:8;-fx-font-weight:bold;" text="Actualizar" textAlignment="CENTER" />
       </HBox>
    </bottom>
 </BorderPane>
