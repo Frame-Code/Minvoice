@@ -172,9 +172,13 @@ public class MainViewController {
         colEstado.setCellValueFactory(new PropertyValueFactory<>("status"));
         colEstado.setCellFactory(column -> new TableCell<InvoiceTableDto, String>() {
             private final ComboBox<String> comboBox = new ComboBox<>(status);
+            private boolean initializing = false;
+
             {
                 comboBox.setMinWidth(120);
                 comboBox.setOnAction(event -> {
+                    if(initializing) return;
+
                     InvoiceTableDto factura = getTableView().getItems().get(getIndex());
                     if (factura != null) {
                         factura.setStatus(comboBox.getValue());
@@ -194,7 +198,9 @@ public class MainViewController {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    initializing = true;
                     comboBox.setValue(valor);
+                    initializing = false;
                     setGraphic(comboBox);
                 }
             }
@@ -215,7 +221,9 @@ public class MainViewController {
             dialog.initOwner(addNewInvoice.getScene().getWindow());
             dialog.setScene(scene);
             dialog.setResizable(false);
-            dialog.show();
+            dialog.showAndWait();
+            initialize();
+            refreshTotals();
         } catch (IOException e) {
             log.error("No se pudo abrir la ventana, error msg: " + e.getCause() + "\n stackTrace: \n" + Arrays.toString(e.getStackTrace()));
             showAlert(Alert.AlertType.ERROR,
@@ -332,6 +340,7 @@ public class MainViewController {
             dialog.setResizable(false);
 
             dialog.showAndWait();
+            initialize();
             refreshTotals();
 
         } catch (Exception ex) {

@@ -26,8 +26,11 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Component
@@ -82,7 +85,7 @@ public class NewInvoiceController {
         );
         invoiceService.save(invoice);
         showMessage("Factura creada correctamente", Alert.AlertType.INFORMATION);
-
+        closeDialog(actionEvent);
 
     }
 
@@ -149,7 +152,7 @@ public class NewInvoiceController {
         cbTipo.getItems().setAll(typeInvoices);
         cbTipo.setValue(cbTipo.getItems().get(0));
 
-
+        txtDescripcion.setText("Factura mensual " + LocalDate.now().getMonth().getDisplayName(TextStyle.FULL, new Locale("es", "ES")));
     }
 
     @FXML

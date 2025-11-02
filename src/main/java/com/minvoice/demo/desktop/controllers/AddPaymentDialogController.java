@@ -131,6 +131,13 @@ public class AddPaymentDialogController {
                     "El pago con un monto de: " + montoResult + "$ guardado correctamente",
                     null);
             actionEvent.consume();
+            onCancel(actionEvent);
+            return;
         }
+        showAlert(Alert.AlertType.WARNING,
+                "Falta informacion por rellenar",
+                "No se pudo registrar el pago porque falta informacion por rellenar",
+                null);
+
     }
 }
