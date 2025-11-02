@@ -1,7 +1,9 @@
 package com.minvoice.demo.application.services.impl;
 
+import com.minvoice.demo.application.services.dto.ResponseDto;
 import com.minvoice.demo.application.services.exceptions.FileNotCopyException;
 import com.minvoice.demo.application.services.interfaces.IFileService;
+import javafx.scene.control.Alert;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,36 @@ public class FileServiceImpl implements IFileService {
         }catch (IOException e) {
             log.error("Error coping file: " + e.getCause() + "\n" + Arrays.toString(e.getStackTrace()));
             throw new FileNotCopyException();
+        }
+    }
+
+    @Override
+    public ResponseDto openInFileExplorer(File file) {
+        if (file == null || !file.exists()) {
+            return new ResponseDto(
+                    "El archivo no existe o la ruta no es válida:\n" + (file != null ? file.getAbsolutePath() : ""),
+                    false);
+        }
+
+        try {
+            File directory = file.isDirectory() ? file : file.getParentFile();
+            if (directory == null) {
+                return new ResponseDto("Error, el directorio no existe", false);
+            }
+
+            String os = System.getProperty("os.name").toLowerCase();
+            if (os.contains("win")) {
+                new ProcessBuilder("explorer.exe", "/select,", file.getAbsolutePath()).start();
+            } else if (os.contains("mac")) {
+                new ProcessBuilder("open", directory.getAbsolutePath()).start();
+            } else {
+                new ProcessBuilder("xdg-open", directory.getAbsolutePath()).start();
+            }
+            return new ResponseDto(null, true);
+
+        } catch (Exception e) {
+            log.error("Error reading file: " + e.getCause() + "\n" + Arrays.toString(e.getStackTrace()));
+            return new ResponseDto("Error interno, revisar logs", false);
         }
     }
 }

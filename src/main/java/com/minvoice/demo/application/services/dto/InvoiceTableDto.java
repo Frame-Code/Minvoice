@@ -19,4 +19,5 @@ public class InvoiceTableDto {
     private double porPagar;
     private LocalDateTime date;
     private String fileName;
+    private String filePath;
 }

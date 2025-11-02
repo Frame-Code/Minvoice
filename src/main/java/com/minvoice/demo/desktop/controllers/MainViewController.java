@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -33,6 +35,7 @@ public class MainViewController {
     private final IInfoInvoiceService infoInvoiceService;
     private final IInvoiceService invoiceService;
     private final IGeneralStatusService statusService;
+    private final IFileService fileService;
 
     @FXML private Button addNewInvoice;
     @FXML private Label lblTotalFacturado;
@@ -93,6 +96,38 @@ public class MainViewController {
         colPorPagar.setCellValueFactory(new PropertyValueFactory<>("porPagar"));
         colFecha.setCellValueFactory(new PropertyValueFactory<>("date"));
         colArchivo.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        colArchivo.setCellFactory(col -> new TableCell<>() {
+            private final Hyperlink link = new Hyperlink();
+
+            {
+                link.setTextFill(Color.web("#007bff"));
+                link.setUnderline(true);
+
+                link.setOnAction(e -> {
+                    InvoiceTableDto row = getTableView().getItems().get(getIndex());
+                    if (row == null) return;
+
+                    File file = resolveFileFor(row);
+                    var response = fileService.openInFileExplorer(file);
+                    if(!response.isSuccessfully()) {
+                        showAlert(Alert.AlertType.ERROR, "Error al abrir carpeta", response.message(), null);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(String fileName, boolean empty) {
+                super.updateItem(fileName, empty);
+                if (empty || fileName == null || fileName.isBlank()) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    link.setText(fileName);
+                    setGraphic(link);
+                    setText(null);
+                }
+            }
+        });
 
         colMonto.setCellFactory(col -> new TableCell<>() {
             @Override
@@ -280,6 +315,10 @@ public class MainViewController {
         lblTotalPagado.setText(String.format("%.2f", infoInvoiceService.getTotalPaid()));
         lblTotalPendiente.setText(String.format("%.2f", infoInvoiceService.getPaymentDue()));
         lblCantidadFacturas.setText(String.valueOf(infoInvoiceService.getInvoiceCount()));
+    }
+
+    private File resolveFileFor(InvoiceTableDto row) {
+        return new File(row.getFilePath());
     }
 
 }

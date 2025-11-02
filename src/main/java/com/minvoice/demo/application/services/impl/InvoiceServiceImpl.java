@@ -105,7 +105,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
                     invoice.getInvoice().getTotal(),
                     invoice.getInvoice().getTotal() - invoice.getInvoice().getTotalPayments(),
                     invoice.getInvoice().getIssueDate(),
-                    invoice.getFileName()
+                    invoice.getFileName(),
+                    invoice.getFilePath()
             ));
         });
 
